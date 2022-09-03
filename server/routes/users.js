@@ -48,14 +48,49 @@ router.put('/', verifyToken, async (req, res) => {
             .json({ success: false, message: 'Missing email' })
 
     try {
+        const oldUser = await User.findById(req.userId)
+
+        // Check for existing username
+        const usernameCheckUser =
+            oldUser.username !== username && (await User.findOne({ username }))
+        if (usernameCheckUser)
+            return res
+                .status(400)
+                .json({ success: false, message: 'Username already taken' })
+
+        // Check for existing email
+        const emailCheckUser =
+            oldUser.email !== email && (await User.findOne({ email }))
+        if (emailCheckUser)
+            return res
+                .status(400)
+                .json({ success: false, message: 'Email already used' })
+
         let updatedUser = {
-            profilePic,
             username,
             email,
         }
 
+        // Check if the password has changed
         const hashedPass = password && (await argon2.hash(password))
         if (hashedPass) updatedUser.password = hashedPass
+
+        // Check if profile picture is default or not
+        let result
+        if (oldUser.profilePic.publicId) {
+            result = await cloudinary.uploader.upload(profilePic, {
+                public_id: oldUser.profilePic.publicId,
+            })
+        } else {
+            result = await cloudinary.uploader.upload(profilePic, {
+                folder: 'lets-write',
+                overwrite: true,
+            })
+        }
+        updatedUser.profilePic = {
+            publicId: result.public_id,
+            url: result.secure_url,
+        }
 
         updatedUser = await User.findByIdAndUpdate(req.userId, updatedUser, {
             new: true,

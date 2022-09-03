@@ -20,10 +20,9 @@ router.get('/', async (req, res) => {
             findCondition.categories = { $in: [category] }
         }
 
-        const posts = await Post.find(findCondition).populate(
-            'user',
-            'username'
-        )
+        const posts = await Post.find(findCondition)
+            .populate('user', 'username')
+            .sort({ createdAt: -1 })
 
         res.json({
             success: true,
@@ -38,10 +37,10 @@ router.get('/', async (req, res) => {
     }
 })
 
-// Get post by title
-router.get('/:title', async (req, res) => {
+// Get post by id
+router.get('/:id', async (req, res) => {
     try {
-        const post = await Post.findOne({ tilte: req.params.title }).populate(
+        const post = await Post.findById(req.params.id).populate(
             'user',
             'username'
         )

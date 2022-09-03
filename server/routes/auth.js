@@ -43,6 +43,7 @@ router.post('/register', async (req, res) => {
         const newUser = new User({
             username,
             email,
+            profilePic: { url: process.env.DAFAULT_PROFILE_PICTURE_URL },
             password: hashedPass,
         })
 
