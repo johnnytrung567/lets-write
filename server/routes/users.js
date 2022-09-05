@@ -34,11 +34,7 @@ router.put('/', verifyToken, async (req, res) => {
     const { username, email, password, profilePic } = req.body
 
     // Simple validation
-    if (!profilePic)
-        return res
-            .status(400)
-            .json({ success: false, message: 'Missing profile picture' })
-    else if (!username)
+    if (!username)
         return res
             .status(400)
             .json({ success: false, message: 'Missing username' })
@@ -75,21 +71,23 @@ router.put('/', verifyToken, async (req, res) => {
         const hashedPass = password && (await argon2.hash(password))
         if (hashedPass) updatedUser.password = hashedPass
 
-        // Check if profile picture is default or not
-        let result
-        if (oldUser.profilePic.publicId) {
-            result = await cloudinary.uploader.upload(profilePic, {
-                public_id: oldUser.profilePic.publicId,
-            })
-        } else {
-            result = await cloudinary.uploader.upload(profilePic, {
-                folder: 'lets-write',
-                overwrite: true,
-            })
-        }
-        updatedUser.profilePic = {
-            publicId: result.public_id,
-            url: result.secure_url,
+        if (profilePic) {
+            let result
+            // Check if profile picture is default or not
+            if (oldUser.profilePic.publicId) {
+                result = await cloudinary.uploader.upload(profilePic, {
+                    public_id: oldUser.profilePic.publicId,
+                })
+            } else {
+                result = await cloudinary.uploader.upload(profilePic, {
+                    folder: 'lets-write',
+                    overwrite: true,
+                })
+            }
+            updatedUser.profilePic = {
+                publicId: result.public_id,
+                url: result.secure_url,
+            }
         }
 
         updatedUser = await User.findByIdAndUpdate(req.userId, updatedUser, {
