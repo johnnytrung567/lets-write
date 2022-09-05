@@ -9,6 +9,7 @@ const cloudinary = require('../utils/cloudinary')
 router.get('/', async (req, res) => {
     const username = req.query.user
     const category = req.query.cat
+    const title = req.query.title
 
     try {
         let findCondition = {}
@@ -16,9 +17,10 @@ router.get('/', async (req, res) => {
         if (username) {
             const userId = await User.findOne({ username }).select('_id')
             findCondition.user = userId
-        } else if (category) {
-            findCondition.categories = { $in: [category] }
         }
+        if (category) findCondition.categories = { $in: [category] }
+
+        if (title) findCondition.title = new RegExp(`${title}`, 'i')
 
         const posts = await Post.find(findCondition)
             .populate('user', 'username')
