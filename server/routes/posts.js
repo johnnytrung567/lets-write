@@ -20,8 +20,6 @@ router.get('/', async (req, res) => {
         }
         if (category) findCondition.categories = { $in: [category] }
 
-        if (title) findCondition.title = new RegExp(`${title}`, 'i')
-
         const posts = await Post.find(findCondition)
             .populate('user', 'username')
             .sort({ createdAt: -1 })
@@ -200,7 +198,8 @@ router.delete('/:id', verifyToken, async (req, res) => {
                 .json({ success: false, message: 'Post not found' })
 
         // Delete photo on cloudinary
-        await cloudinary.uploader.destroy(existPost.photo.publicId)
+        if (existPost.photo.publicId)
+            await cloudinary.uploader.destroy(existPost.photo.publicId)
 
         const post = await Post.findOneAndDelete({
             _id: req.params.id,
