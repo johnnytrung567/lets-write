@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import AOS from 'aos'
@@ -21,8 +21,11 @@ import { loadTheme } from './redux/slices/themeSlice'
 import { useState } from 'react'
 import Contact from './pages/Contact'
 import About from './pages/About'
+import useScrollToTop from './hooks/useScrollToTop'
 
 function App() {
+    useScrollToTop()
+
     AOS.init({
         duration: 1200,
         once: true,
@@ -38,35 +41,30 @@ function App() {
     }, [])
 
     return (
-        <BrowserRouter>
-            <div className='dark:bg-zinc-800 dark:text-gray-100'>
-                <TopBar
-                    isSidebarOpen={isSidebarOpen}
-                    toggleSidebarOpen={toggleSidebarOpen}
-                />
-                <Sidebar
-                    isOpen={isSidebarOpen}
-                    toggleOpen={toggleSidebarOpen}
-                />
-                <Routes>
-                    <Route path='/' element={<Home />} />
-                    <Route path='/post/:id' element={<Single />} />
-                    <Route path='/contact' element={<Contact />} />
-                    <Route path='/about' element={<About />} />
+        <div className='dark:bg-zinc-800 dark:text-gray-100'>
+            <TopBar
+                isSidebarOpen={isSidebarOpen}
+                toggleSidebarOpen={toggleSidebarOpen}
+            />
+            <Sidebar isOpen={isSidebarOpen} toggleOpen={toggleSidebarOpen} />
+            <Routes>
+                <Route path='/' element={<Home />} />
+                <Route path='/post/:id' element={<Single />} />
+                <Route path='/contact' element={<Contact />} />
+                <Route path='/about' element={<About />} />
 
-                    <Route element={<AuthRoute />}>
-                        <Route path='/login' element={<Login />} />
-                        <Route path='/register' element={<Register />} />
-                    </Route>
+                <Route element={<AuthRoute />}>
+                    <Route path='/login' element={<Login />} />
+                    <Route path='/register' element={<Register />} />
+                </Route>
 
-                    <Route element={<ProtectedRoute />}>
-                        <Route path='/write' element={<Write />} />
-                        <Route path='/settings' element={<Settings />} />
-                    </Route>
-                </Routes>
-                <ToastContainer />
-            </div>
-        </BrowserRouter>
+                <Route element={<ProtectedRoute />}>
+                    <Route path='/write' element={<Write />} />
+                    <Route path='/settings' element={<Settings />} />
+                </Route>
+            </Routes>
+            <ToastContainer />
+        </div>
     )
 }
 

@@ -62,7 +62,7 @@ const SideBoard = () => {
                                 </Link>
                             </h3>
                             <p
-                                className='mt-2 preview-content post-content'
+                                className='mt-2 max-h-28 preview-content post-content'
                                 dangerouslySetInnerHTML={{
                                     __html: posts[random].content,
                                 }}

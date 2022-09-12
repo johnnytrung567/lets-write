@@ -61,7 +61,7 @@ const SinglePost = () => {
                 <h1 className='mx-auto mt-6 mb-3 text-4xl font-josefin font-bold'>
                     {post.title}
                 </h1>
-                {post.user.username === user.username && (
+                {user && post.user.username === user.username && (
                     <div className='flex text-lg mb-2 md:mb-0 md:ml-4'>
                         <FaEdit
                             className='text-teal-700 cursor-pointer'
