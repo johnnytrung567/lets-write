@@ -22,6 +22,7 @@ import { useState } from 'react'
 import Contact from './pages/Contact'
 import About from './pages/About'
 import useScrollToTop from './hooks/useScrollToTop'
+import { fetchPosts } from './redux/slices/postsSlice'
 
 function App() {
     useScrollToTop()
@@ -38,6 +39,7 @@ function App() {
     useEffect(() => {
         dispatch(loadUser())
         dispatch(loadTheme())
+        dispatch(fetchPosts())
     }, [])
 
     return (
