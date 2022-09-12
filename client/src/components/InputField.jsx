@@ -1,10 +1,12 @@
 const InputField = ({
     wrapperStyles = '',
-    type = 'text',
     inputId,
     label,
-    placeholder = '',
-    value = '',
+    register,
+    errors,
+    required,
+    validations,
+    ...inputProps
 }) => {
     return (
         <div className={`${wrapperStyles}`}>
@@ -12,12 +14,18 @@ const InputField = ({
                 {label}
             </label>
             <input
-                type={type}
-                placeholder={placeholder}
-                value={value}
                 id={inputId}
+                {...inputProps}
                 className=' border-2 outline-none rounded-md w-full p-1.5 focus:border-teal-800 dark:focus:border-teal-500 dark:text-gray-700'
+                {...register(inputId, {
+                    required:
+                        required && `Please enter your ${label.toLowerCase()}`,
+                    ...validations,
+                })}
             />
+            {errors && (
+                <span className='text-red-500 text-xs'>{errors.message}</span>
+            )}
         </div>
     )
 }
