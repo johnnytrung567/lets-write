@@ -35,7 +35,7 @@ const Post = ({ post }) => {
                 {new Date(post.createdAt).toDateString()}
             </span>
             <p
-                className='post-content flex-1 mr-auto mt-4 font-varelaRound text-gray-700 dark:text-gray-300 leading-7 max-h-28 preview-content'
+                className='post-content flex-auto sm:flex-1 mr-auto mt-4 font-varelaRound text-gray-700 dark:text-gray-300 leading-7 max-h-28 preview-content'
                 dangerouslySetInnerHTML={{ __html: post.content }}
             ></p>
         </div>

@@ -47,7 +47,7 @@ const Sidebar = ({ isOpen, toggleOpen }) => {
                                 to='/'
                                 className={({ isActive }) =>
                                     isActive
-                                        ? 'px-3 py-1 block w-full bg-gray-20   0 dark:bg-gray-800 transition-all duration-300'
+                                        ? 'px-3 py-1 block w-full bg-gray-200 dark:bg-gray-800 transition-all duration-300'
                                         : 'px-3 py-1 block w-full'
                                 }
                                 onClick={toggleOpen}

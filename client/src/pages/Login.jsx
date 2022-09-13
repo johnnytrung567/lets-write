@@ -37,9 +37,9 @@ const Login = () => {
 
     return (
         <div className='min-h-[calc(100vh-50px)] flex items-center relative z-0 bg-[url(/images/login.jpg)] bg-no-repeat bg-cover'>
-            <div className='absolute top-0 bottom-0 left-0 right-0 bg-white/95 dark:bg-black/75 -z-10 ' />
+            <div className='absolute top-0 bottom-0 left-0 right-0 bg-white/[0.85] sm:bg-white/90 dark:bg-black/75 -z-10 ' />
             {!loading ? (
-                <div className='w-full max-w-sm mx-auto'>
+                <div className='w-full max-w-sm px-2 mx-auto'>
                     <h1 className='text-5xl text-center mb-10'>Login</h1>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <InputField
