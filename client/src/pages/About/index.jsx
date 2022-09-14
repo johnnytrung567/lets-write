@@ -72,7 +72,7 @@ const About = () => {
             </section>
 
             {/* ParallaxCounter */}
-            <section className="w-full mt-14 pt-16 pb-20 bg-[url('/images/parallax-background.jpg')] bg-center bg-cover bg-fixed relative -z-20 after:-z-10 after:absolute after:top-0 after:bottom-0 after:left-0 after:right-0 after:bg-black/70">
+            <section className="w-full mt-14 pt-16 pb-20 bg-[url('/images/parallax-background.jpg')] bg-center bg-cover bg-fixed relative z-0 after:-z-[1] after:absolute after:top-0 after:bottom-0 after:left-0 after:right-0 after:bg-black/70">
                 <div className='text-white flex flex-wrap max-w-7xl mx-auto'>
                     {counterData.map((item, index) => (
                         <div

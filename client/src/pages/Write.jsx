@@ -118,7 +118,11 @@ const Write = () => {
                 }
             >
                 <img
-                    src={updateMode ? post.photo.url : defaultPostPhoto}
+                    src={
+                        updateMode && post.photo.url
+                            ? post.photo.url
+                            : defaultPostPhoto
+                    }
                     alt=''
                     ref={photoRef}
                     className='w-full h-64 md:h-80 object-cover rounded-lg'
