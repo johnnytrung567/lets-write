@@ -49,6 +49,7 @@ const Search = ({ customClass, isShow, toggleShow, searchIconRef }) => {
     return (
         <form
             className={`flex items-center border border-r-0 dark:border-transparent w-64 rounded-md overflow-hidden transition-all ${customClass}`}
+            onSubmit={e => e.preventDefault()}
         >
             <div className='flex items-center flex-1 bg-white '>
                 <input
@@ -73,7 +74,6 @@ const Search = ({ customClass, isShow, toggleShow, searchIconRef }) => {
             </div>
             <button
                 className=' bg-gray-600 text-white p-2 '
-                type='button'
                 ref={searchIconBtnRef}
             >
                 <FiSearch />
